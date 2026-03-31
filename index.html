@@ -3,250 +3,230 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>SimpsonCity - Bart Simpson : Fils d'Homer</title>
+    <title>SimpsonCity - Tome 3 "Fils d'Homer"</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css2?family=Bangers&family=Open+Sans:wght@400;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Bangers&family=Outfit:wght@300;400;700&display=swap" rel="stylesheet">
     
     <style>
         :root {
-            --simpson-yellow: #FFD90F;
-            --simpson-red: #F14E28;
-            --simpson-blue: #007DC3;
-            --simpson-green: #46B246;
-            --simpson-pink: #ED6FB7;
+            --yellow: #FFD90F; --red: #F14E28; --blue: #007DC3; --green: #46B246;
         }
-
-        body { font-family: 'Open Sans', sans-serif; background-color: #f8f8f8; overflow-x: hidden; }
-        h1, h2, h3, .comic-font { font-family: 'Bangers', cursive; letter-spacing: 1px; }
+        body { font-family: 'Outfit', sans-serif; background-color: #f0f2f5; }
+        .comic { font-family: 'Bangers', cursive; letter-spacing: 1px; }
         
-        .bg-yellow-simpson { background-color: var(--simpson-yellow); }
-        .text-red-simpson { color: var(--simpson-red); }
-        
-        .page-section { display: none; min-height: 80vh; }
-        .page-section.active { display: block; animation: fadeIn 0.5s ease; }
+        /* Glassmorphism & Animations */
+        .glass { background: rgba(255, 255, 255, 0.95); backdrop-filter: blur(10px); }
+        .page { display: none; }
+        .page.active { display: block; animation: fadeIn 0.4s ease-out; }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
 
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(10px); }
-            to { opacity: 1; transform: translateY(0); }
+        /* Carte Interactive */
+        .map-container {
+            background: #73c2fb; /* Couleur ciel/eau */
+            border: 8px solid #000;
+            position: relative;
+            height: 500px;
+            overflow: hidden;
+            border-radius: 2rem;
         }
-
-        .card-char:hover { transform: translateY(-5px) rotate(1deg); transition: 0.3s; }
-        .btn-simpson { transition: all 0.2s; border-bottom: 4px solid rgba(0,0,0,0.2); }
-        .btn-simpson:active { transform: translateY(2px); border-bottom-width: 2px; }
+        .landmark {
+            position: absolute;
+            transition: all 0.3s;
+            cursor: pointer;
+            filter: drop-shadow(0 4px 6px rgba(0,0,0,0.3));
+        }
+        .landmark:hover { transform: scale(1.2) rotate(5deg); z-index: 50; }
+        
+        /* Modal Style */
+        #charModal { transition: all 0.3s ease; }
     </style>
 </head>
-<body>
+<body class="bg-slate-100">
 
-    <nav class="bg-[#007DC3] p-4 text-white sticky top-0 z-50 shadow-xl border-b-4 border-black">
+    <nav class="sticky top-0 z-50 bg-[#007DC3] text-white p-4 shadow-2xl border-b-4 border-black">
         <div class="container mx-auto flex flex-col md:flex-row justify-between items-center gap-4">
-            <a href="#" onclick="showPage('home')" class="text-4xl comic-font tracking-widest text-[#FFD90F] drop-shadow-[2px_2px_0_rgba(0,0,0,1)]">SIMPSONCITY</a>
+            <h1 onclick="showPage('home')" class="comic text-4xl cursor-pointer text-[#FFD90F] drop-shadow-[3px_3px_0_rgba(0,0,0,1)]">SIMPSONCITY</h1>
             
-            <div class="relative w-full md:w-1/3">
-                <input type="text" id="globalSearch" placeholder="Rechercher dans le tome 3..." 
-                       class="w-full p-2 pl-10 rounded-lg text-gray-800 border-2 border-black focus:ring-4 focus:ring-yellow-400 outline-none">
-                <i class="fa fa-search absolute left-3 top-3 text-gray-400"></i>
+            <div class="flex flex-1 max-w-xl mx-4 relative">
+                <input type="text" placeholder="Rechercher un personnage, un lieu..." class="w-full py-2 px-10 rounded-full text-black border-2 border-black focus:ring-4 focus:ring-yellow-400">
+                <i class="fa fa-search absolute left-4 top-3 text-gray-400"></i>
             </div>
 
-            <div class="flex gap-4 comic-font text-xl">
-                <button onclick="showPage('characters')" class="hover:text-yellow-300">Personnages</button>
-                <button onclick="showPage('quotes')" class="hover:text-yellow-300">Répliques</button>
-                <button onclick="showPage('login')" class="bg-[#F14E28] px-4 py-1 rounded-md border-2 border-black shadow-[2px_2px_0_black]">LOGIN</button>
+            <div class="flex gap-6 comic text-xl">
+                <button onclick="showPage('map')" class="hover:text-yellow-300">Carte</button>
+                <button onclick="showPage('chars')" class="hover:text-yellow-300">Personnages</button>
+                <button onclick="showPage('login')" class="bg-[#F14E28] px-6 py-1 rounded-full border-2 border-black">Login</button>
             </div>
         </div>
     </nav>
 
-    <section id="home" class="page-section active">
-        <header class="bg-yellow-simpson py-16 text-center border-b-8 border-black relative overflow-hidden">
-            <div class="relative z-10">
-                <h1 class="text-7xl md:text-9xl text-[#F14E28] drop-shadow-2xl mb-2">BART SIMPSON</h1>
-                <div class="inline-block bg-black text-white text-3xl px-8 py-2 transform -rotate-3 mb-6">FILS D'HOMER</div>
-                <p class="max-w-2xl mx-auto text-xl font-bold text-blue-900 px-4">
-                    Le guide interactif officiel du Tome 3. Plongez dans les archives de Springfield !
-                </p>
-            </div>
-            <div class="absolute -right-10 -bottom-10 opacity-20 text-[200px] rotate-12">🍩</div>
-        </header>
-
-        <div class="container mx-auto py-12 px-4">
-            <div class="grid grid-cols-2 md:grid-cols-5 gap-6">
-                <button onclick="alert('Section Histoires bientôt disponible !')" class="bg-white p-8 rounded-2xl shadow-lg border-b-8 border-blue-500 card-char">
-                    <span class="text-5xl block mb-2">📚</span><span class="comic-font text-2xl">Histoires</span>
-                </button>
-                <button onclick="showPage('characters')" class="bg-white p-8 rounded-2xl shadow-lg border-b-8 border-yellow-400 card-char">
-                    <span class="text-5xl block mb-2">👦</span><span class="comic-font text-2xl">Personnages</span>
-                </button>
-                <button onclick="alert('Section Lieux bientôt disponible !')" class="bg-white p-8 rounded-2xl shadow-lg border-b-8 border-green-500 card-char">
-                    <span class="text-5xl block mb-2">🏠</span><span class="comic-font text-2xl">Lieux</span>
-                </button>
-                <button onclick="alert('Section Objets bientôt disponible !')" class="bg-white p-8 rounded-2xl shadow-lg border-b-8 border-pink-400 card-char">
-                    <span class="text-5xl block mb-2">🎷</span><span class="comic-font text-2xl">Objets</span>
-                </button>
-                <button onclick="showPage('quotes')" class="bg-white p-8 rounded-2xl shadow-lg border-b-8 border-red-500 card-char">
-                    <span class="text-5xl block mb-2">💬</span><span class="comic-font text-2xl">Répliques</span>
-                </button>
+    <section id="home" class="page active">
+        <div class="bg-[#FFD90F] py-20 border-b-8 border-black text-center relative">
+            <h2 class="text-8xl md:text-9xl comic text-[#F14E28] drop-shadow-lg">BART SIMPSON</h2>
+            <p class="text-3xl comic bg-black text-white inline-block px-4 py-1 rotate-[-2deg]">FILS D'HOMER - TOME 3</p>
+            <div class="mt-10 flex justify-center gap-4">
+                <button onclick="showPage('chars')" class="bg-white p-4 rounded-xl shadow-xl font-bold border-b-4 border-blue-500 hover:bg-gray-50">👥 Personnages</button>
+                <button onclick="showPage('map')" class="bg-white p-4 rounded-xl shadow-xl font-bold border-b-4 border-green-500 hover:bg-gray-50">📍 Explorer la Ville</button>
             </div>
         </div>
     </section>
 
-    <section id="characters" class="page-section container mx-auto py-10 px-4">
-        <div class="flex flex-col md:flex-row justify-between items-center mb-10 gap-4">
-            <h2 class="text-5xl text-red-simpson uppercase">Le Casting du Tome</h2>
-            <input type="text" id="charSearch" onkeyup="filterCharacters()" placeholder="Chercher un nom..." 
-                   class="p-3 border-4 border-yellow-400 rounded-xl w-full md:w-80 outline-none">
-        </div>
-        <div id="charGrid" class="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-6 gap-6">
+    <section id="map" class="page container mx-auto py-10 px-4">
+        <h2 class="comic text-5xl mb-8 text-center text-[#46B246]">Springfield Interactive (Tome 3)</h2>
+        <div class="map-container bg-green-100 border-4 border-dashed border-green-300">
+            <div class="landmark top-1/4 left-1/4 text-center" onclick="alert('Maison des Simpsons : Le cœur de l\'action du Tome 3 !')">
+                <div class="text-5xl">🏠</div><p class="comic text-xs bg-white px-1 border border-black">Maison Simpson</p>
             </div>
-    </section>
-
-    <section id="quotes" class="page-section container mx-auto py-10 px-4">
-        <h2 class="text-5xl text-blue-600 mb-8 uppercase">Répliques Cultes</h2>
-        <div class="grid md:grid-cols-2 gap-6" id="quoteContainer">
+            <div class="landmark top-1/2 left-1/2 text-center" onclick="alert('Kwik-E-Mart : Où Bart achète ses Squishees !')">
+                <div class="text-5xl">🏪</div><p class="comic text-xs bg-white px-1 border border-black">Kwik-E-Mart</p>
             </div>
-    </section>
-
-    <section id="login" class="page-section container mx-auto py-20 px-4">
-        <div class="max-w-md mx-auto bg-white p-8 rounded-3xl border-4 border-black shadow-[8px_8px_0_black]">
-            <h2 class="text-4xl mb-6 text-center">Connexion Membre</h2>
-            <div class="space-y-4">
-                <div>
-                    <label class="block font-bold mb-1">Duh... Votre Nom ?</label>
-                    <input type="text" class="w-full p-3 border-2 border-gray-300 rounded-lg outline-none focus:border-yellow-400">
-                </div>
-                <div>
-                    <label class="block font-bold mb-1">Mot de passe secret</label>
-                    <input type="password" class="w-full p-3 border-2 border-gray-300 rounded-lg outline-none focus:border-yellow-400">
-                </div>
-                <button onclick="showPage('admin')" class="w-full bg-[#007DC3] text-white p-4 rounded-xl comic-font text-2xl btn-simpson">ENTRER !</button>
+            <div class="landmark top-10 right-20 text-center" onclick="alert('École Élémentaire : Le terrain de jeu de Bart et Nelson.')">
+                <div class="text-5xl">🏫</div><p class="comic text-xs bg-white px-1 border border-black">École</p>
+            </div>
+            <div class="landmark bottom-20 left-1/3 text-center" onclick="alert('Taverne de Moe : Le repaire secret d\'Homer.')">
+                <div class="text-5xl">🍺</div><p class="comic text-xs bg-white px-1 border border-black">Chez Moe</p>
+            </div>
+            <div class="landmark top-1/2 right-1/4 text-center" onclick="alert('Centrale Nucléaire : Attention aux radiations !')">
+                <div class="text-5xl">☢️</div><p class="comic text-xs bg-white px-1 border border-black">Centrale</p>
             </div>
         </div>
     </section>
 
-    <section id="admin" class="page-section bg-gray-200 min-h-screen">
-        <div class="flex">
-            <aside class="w-64 bg-slate-900 text-white min-h-screen p-6 hidden md:block">
-                <h3 class="text-yellow-400 text-3xl mb-8">Admin Panel</h3>
-                <nav class="space-y-4 font-bold">
-                    <div class="text-blue-400 border-b border-gray-700 pb-2">GESTION</div>
-                    <a href="#" class="block hover:translate-x-2 transition-transform">📝 Histoires</a>
-                    <a href="#" class="block hover:translate-x-2 transition-transform">👥 Personnages</a>
-                    <a href="#" class="block hover:translate-x-2 transition-transform">💬 Commentaires</a>
-                    <button onclick="showPage('home')" class="mt-10 text-red-500">SORTIR</button>
-                </nav>
-            </aside>
-            <main class="flex-1 p-8">
-                <h2 class="text-4xl mb-6">Tableau de Bord</h2>
-                <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
-                    <div class="bg-white p-6 rounded-xl border-l-8 border-yellow-400 shadow">
-                        <p class="text-gray-500">Membres Actifs</p>
-                        <p class="text-4xl font-bold">1,240</p>
-                    </div>
-                    <div class="bg-white p-6 rounded-xl border-l-8 border-green-500 shadow">
-                        <p class="text-gray-500">Répliques Validées</p>
-                        <p class="text-4xl font-bold">85</p>
-                    </div>
-                    <div class="bg-white p-6 rounded-xl border-l-8 border-red-500 shadow">
-                        <p class="text-gray-500">Signalements</p>
-                        <p class="text-4xl font-bold">2</p>
-                    </div>
+    <section id="chars" class="page container mx-auto py-10 px-4">
+        <div class="flex justify-between items-end mb-10">
+            <h2 class="comic text-6xl text-[#F14E28]">Les Figures du Tome</h2>
+            <input type="text" id="charInput" onkeyup="searchChar()" placeholder="Filtrer..." class="p-2 border-b-4 border-yellow-400 outline-none bg-transparent comic text-2xl w-48">
+        </div>
+        <div id="charGrid" class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-8">
+            </div>
+    </section>
+
+    <div id="charModal" class="fixed inset-0 z-[100] hidden flex items-center justify-center p-4 bg-black/80 backdrop-blur-sm">
+        <div class="bg-white rounded-[2rem] w-full max-w-3xl overflow-hidden border-4 border-black relative">
+            <button onclick="closeModal()" class="absolute top-4 right-6 text-4xl font-bold">&times;</button>
+            <div class="flex flex-col md:flex-row">
+                <div id="modalImgContainer" class="w-full md:w-1/2 bg-yellow-400 p-8 flex justify-center items-center">
+                    <img id="modalImg" src="" alt="" class="max-h-80 drop-shadow-2xl">
                 </div>
-                <div class="bg-white rounded-2xl p-6 shadow-lg">
-                    <h3 class="text-2xl mb-4">Dernières modifications</h3>
-                    <div class="border-t">
-                        <div class="py-3 flex justify-between border-b">
-                            <span>Ajout de la fiche : <b>Milhouse</b></span>
-                            <span class="text-gray-400 text-sm">Il y a 2h</span>
+                <div class="p-8 w-full md:w-1/2">
+                    <h3 id="modalName" class="comic text-5xl text-blue-600 mb-2"></h3>
+                    <p id="modalDesc" class="text-gray-600 italic mb-6"></p>
+                    <div class="space-y-4">
+                        <div class="bg-slate-100 p-3 rounded-lg border-l-4 border-red-500">
+                            <span class="font-bold text-red-500 uppercase text-xs">Réplique Culte :</span>
+                            <p id="modalQuote" class="font-medium"></p>
                         </div>
-                        <div class="py-3 flex justify-between border-b">
-                            <span>Réplique modifiée : <b>Bart</b></span>
-                            <span class="text-gray-400 text-sm">Il y a 5h</span>
+                        <div class="bg-slate-100 p-3 rounded-lg border-l-4 border-green-500">
+                            <span class="font-bold text-green-500 uppercase text-xs">Lieux associés :</span>
+                            <p id="modalLieu" class="font-medium text-sm"></p>
                         </div>
                     </div>
+                    <div class="mt-8 border-t pt-4">
+                        <p class="text-xs font-bold text-gray-400 mb-2">PERSONNAGES LIÉS :</p>
+                        <div class="flex gap-2" id="modalRelated"></div>
+                    </div>
                 </div>
-            </main>
+            </div>
+        </div>
+    </div>
+
+    <section id="login" class="page container mx-auto py-20 flex justify-center">
+        <div class="bg-white p-10 rounded-3xl border-4 border-black shadow-[10px_10px_0_#000] w-full max-w-md">
+            <h2 class="comic text-4xl mb-6 text-center">Section Admin</h2>
+            <input type="text" placeholder="Nom d'utilisateur" class="w-full mb-4 p-4 border-2 border-gray-200 rounded-xl outline-none focus:border-yellow-400">
+            <input type="password" placeholder="Mot de passe" class="w-full mb-6 p-4 border-2 border-gray-200 rounded-xl outline-none focus:border-yellow-400">
+            <button onclick="showPage('admin')" class="w-full bg-[#007DC3] text-white py-4 rounded-xl comic text-2xl hover:bg-blue-600 transition">ENTRER</button>
         </div>
     </section>
-
-    <footer class="bg-black text-white py-8 mt-12">
-        <div class="container mx-auto text-center">
-            <p class="comic-font text-2xl text-yellow-400">SimpsonCity - 2026</p>
-            <p class="text-sm opacity-50">Fan-site non-officiel dédié au Tome 3 "Fils d'Homer"</p>
-        </div>
-    </footer>
 
     <script>
         const characters = [
-            {name: "Homer Simpson", role: "Le Papa"}, {name: "Marge Simpson", role: "La Maman"},
-            {name: "Bart Simpson", role: "El Barto"}, {name: "Lisa Simpson", role: "Le Génie"},
-            {name: "Maggie Simpson", role: "Bébé"}, {name: "Patty & Selma", role: "Tantes"},
-            {name: "Milhouse", role: "Meilleur ami"}, {name: "Nelson Muntz", role: "Bagarreur"},
-            {name: "Ralph Wiggum", role: "Spécial"}, {name: "Martin Prince", role: "Intello"},
-            {name: "Sherri & Terri", role: "Jumelles"}, {name: "Ned Flanders", role: "Voisin"},
-            {name: "Moe Szyslak", role: "Barman"}, {name: "Barney Gumble", role: "Client"},
-            {name: "Chef Wiggum", role: "Police"}, {name: "Krusty le Clown", role: "Star TV"}
+            {
+                name: "Homer Simpson",
+                desc: "Père de famille maladroit mais attachant, fan inconditionnel de donuts et de bière Duff.",
+                img: "https://upload.wikimedia.org/wikipedia/en/0/02/Homer_Simpson_2006.png",
+                quote: "D'oh! / Ouh pinaise !",
+                lieu: "Centrale Nucléaire, Taverne de Moe",
+                color: "bg-blue-400"
+            },
+            {
+                name: "Bart Simpson",
+                desc: "Le 'Fils d'Homer'. Cancre professionnel et skateur émérite. C'est la star de ce Tome 3 !",
+                img: "https://upload.wikimedia.org/wikipedia/en/a/aa/Bart_Simpson_2006.png",
+                quote: "Ay Caramba ! / Va te faire shampouiner !",
+                lieu: "École de Springfield, Cabane dans l'arbre",
+                color: "bg-orange-400"
+            },
+            {
+                name: "Marge Simpson",
+                desc: "Le pilier de la famille avec sa coiffure bleue iconique. Elle essaie de maintenir l'ordre.",
+                img: "https://upload.wikimedia.org/wikipedia/en/0/0b/Marge_Simpson.png",
+                quote: "Mmmmmmh... (Grognement d'inquiétude)",
+                lieu: "Maison des Simpson, Supermarché",
+                color: "bg-green-400"
+            },
+            {
+                name: "Krusty le Clown",
+                desc: "L'idole télévisuelle de Bart. Un clown cynique qui aime l'argent plus que les enfants.",
+                img: "https://upload.wikimedia.org/wikipedia/en/5/5a/Krusty_the_Clown.png",
+                quote: "Hey Hey ! Salut les enfants !",
+                lieu: "Studios Krustylu",
+                color: "bg-purple-400"
+            }
         ];
 
-        const quotes = [
-            {char: "Homer", text: "D'oh! Pourquoi tout ce qui est bon est illégal ou fait grossir ?", votes: 156},
-            {char: "Bart", text: "Ay Caramba ! Je n'ai rien fait, je le jure !", votes: 243},
-            {char: "Lisa", text: "Si quelqu'un a besoin de moi, je serai dans ma chambre.", votes: 89},
-            {char: "Nelson", text: "Ha-Ha !", votes: 512},
-            {char: "Ralph", text: "Mon haleine sent la nourriture pour chat.", votes: 320},
-            {char: "Moe", text: "Ne vous inquiétez pas, c'est de la bière de qualité... enfin presque.", votes: 67}
-        ];
-
-        // Navigation simple
-        function showPage(pageId) {
-            document.querySelectorAll('.page-section').forEach(p => p.classList.remove('active'));
-            document.getElementById(pageId).classList.add('active');
+        function showPage(id) {
+            document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+            document.getElementById(id).classList.add('active');
             window.scrollTo(0,0);
         }
 
-        // Rendu des personnages
-        function initCharacters() {
+        function renderChars() {
             const grid = document.getElementById('charGrid');
-            grid.innerHTML = characters.map(c => `
-                <div class="bg-white rounded-2xl shadow-md p-4 border-2 border-transparent hover:border-yellow-400 card-char cursor-pointer text-center">
-                    <div class="w-full h-32 bg-gray-100 rounded-xl mb-3 flex items-center justify-center text-4xl">👤</div>
-                    <h4 class="font-bold uppercase text-sm">${c.name}</h4>
-                    <p class="text-xs text-blue-500 font-bold">${c.role}</p>
-                </div>
-            `).join('');
-        }
-
-        // Rendu des répliques
-        function initQuotes() {
-            const container = document.getElementById('quoteContainer');
-            container.innerHTML = quotes.map(q => `
-                <div class="bg-white p-6 rounded-2xl border-l-8 border-pink-500 shadow-lg relative overflow-hidden">
-                    <p class="text-2xl italic mb-4 font-semibold">"${q.text}"</p>
-                    <div class="flex justify-between items-center">
-                        <span class="bg-yellow-400 px-3 py-1 rounded-full font-bold text-sm border border-black">${q.char}</span>
-                        <div class="flex gap-4">
-                            <button class="hover:text-green-500 font-bold"><i class="fa fa-thumbs-up"></i> ${q.votes}</button>
-                            <button class="hover:text-red-500"><i class="fa fa-thumbs-down"></i></button>
-                            <button class="text-pink-500"><i class="fa fa-heart"></i></button>
-                        </div>
+            grid.innerHTML = characters.map((c, i) => `
+                <div onclick="openModal(${i})" class="bg-white rounded-3xl p-6 shadow-xl border-4 border-black hover:-translate-y-2 transition-all cursor-pointer group">
+                    <div class="h-52 flex justify-center items-center overflow-hidden bg-slate-50 rounded-2xl mb-4">
+                        <img src="${c.img}" class="h-40 group-hover:scale-110 transition-transform">
                     </div>
+                    <h3 class="comic text-3xl text-center">${c.name}</h3>
+                    <p class="text-center text-blue-500 font-bold uppercase text-xs tracking-widest">Voir la fiche</p>
                 </div>
             `).join('');
         }
 
-        // Filtrage dynamique
-        function filterCharacters() {
-            const val = document.getElementById('charSearch').value.toLowerCase();
+        function openModal(index) {
+            const c = characters[index];
+            document.getElementById('modalName').innerText = c.name;
+            document.getElementById('modalDesc').innerText = c.desc;
+            document.getElementById('modalImg').src = c.img;
+            document.getElementById('modalQuote').innerText = c.quote;
+            document.getElementById('modalLieu').innerText = c.lieu;
+            document.getElementById('modalImgContainer').className = `w-full md:w-1/2 p-8 flex justify-center items-center ${c.color}`;
+            
+            // Simuler personnages liés
+            document.getElementById('modalRelated').innerHTML = `
+                <div class="w-10 h-10 bg-gray-200 rounded-full border border-black"></div>
+                <div class="w-10 h-10 bg-gray-300 rounded-full border border-black"></div>
+            `;
+
+            document.getElementById('charModal').classList.remove('hidden');
+        }
+
+        function closeModal() {
+            document.getElementById('charModal').classList.add('hidden');
+        }
+
+        function searchChar() {
+            const filter = document.getElementById('charInput').value.toLowerCase();
             const cards = document.querySelectorAll('#charGrid > div');
-            cards.forEach((card, index) => {
-                const name = characters[index].name.toLowerCase();
-                card.style.display = name.includes(val) ? 'block' : 'none';
+            cards.forEach((card, i) => {
+                const name = characters[i].name.toLowerCase();
+                card.style.display = name.includes(filter) ? 'block' : 'none';
             });
         }
 
-        // Initialisation
-        window.onload = () => {
-            initCharacters();
-            initQuotes();
-        };
+        window.onload = renderChars;
     </script>
 </body>
 </html>
