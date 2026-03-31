@@ -1,340 +1,305 @@
 <!DOCTYPE html>
-    <html lang="en">
-    <head>
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hypermédia - Bart Simpson : Fils d'Homer</title>
+    <style>
+        /* --- DESIGN SYSTEM SIMPSONS --- */
+        :root {
+            --simpson-yellow: #FFD90F; /* Peau */
+            --simpson-blue: #007DC3;   /* Pantalon Homer / Ciel */
+            --simpson-red: #ED1C24;    /* T-shirt Bart */
+            --simpson-white: #FFFFFF;
+            --simpson-black: #000000;
+        }
 
-        <!-- BOX ICONS -->
-        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/boxicons@latest/css/boxicons.min.css">
+        body {
+            font-family: 'Comic Sans MS', 'Arial', sans-serif;
+            background-color: var(--simpson-yellow);
+            margin: 0;
+            padding: 0;
+            color: var(--simpson-black);
+        }
 
-        <!-- CSS -->
-        <link rel="stylesheet" href="assets/css/styles.css">
+        /* --- HEADER & NAV --- */
+        header {
+            background-color: var(--simpson-blue);
+            color: white;
+            padding: 30px;
+            text-align: center;
+            border-bottom: 6px solid var(--simpson-black);
+            text-shadow: 2px 2px var(--simpson-black);
+        }
 
-        <!-- Favicon -->
-        <link rel="icon" href="assets/img/muhammad.jpg"  type="image/jpg">
+        nav {
+            display: flex;
+            justify-content: center;
+            background: var(--simpson-red);
+            padding: 15px;
+            border-bottom: 4px solid var(--simpson-black);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
 
-        <title>Muhammad Essa</title>
-    </head>
-    <body>
-        <!-- HEADER -->
-        <header class="l-header" id="header">
-            <nav class="nav bd-container">
-                <a href="#" class="nav_logo">Muhammad Essa</a>
-                <div class="nav_menu" id="nav-menu">
-                    <ul class="nav_list">
-                        <li class="nav_item">
-                            <a href="#home" class="nav_link active-link">
-                                <i class='bx bx-home nav_icon'></i>Home
-                            </a>
-                        </li>
-                        <li class="nav_item">
-                            <a href="#profile" class="nav_link">
-                                <i class='bx bx-user nav_icon'></i>Profile
-                            </a>
-                        </li>
-                        <li class="nav_item">
-                            <a href="#education" class="nav_link">
-                                <i class='bx bx-book nav_icon'></i>Education
-                            </a>
-                        </li>
-                        <li class="nav_item">
-                            <a href="#skills" class="nav_link">
-                                <i class='bx bx-receipt nav_icon'></i>Skills
-                            </a>
-                        </li>
-                        <li class="nav_item">
-                            <a href="#experience" class="nav_link">
-                                <i class='bx bx-briefcase-alt nav_icon'></i>Experience
-                            </a>
-                        </li>
-                        <li class="nav_item">
-                            <a href="#certificate" class="nav_link">
-                                <i class='bx bx-award nav_icon'></i>Certificate
-                            </a>
-                        </li>
-                        <li class="nav_item">
-                            <a href="#references" class="nav_link">
-                                <i class='bx bx-link-external nav_icon'></i>References
-                            </a>
-                        </li>
-                    </ul>
-                </div>
-                <div class="nav_toggle" id="nav-toggle">
-                    <i class='bx bx-grid-alt'></i>
-                </div>
-            </nav>
-        </header>
+        nav a {
+            color: white;
+            text-decoration: none;
+            margin: 0 20px;
+            font-weight: bold;
+            text-transform: uppercase;
+            font-size: 1.1em;
+        }
 
-        <main class="l-main bd-container">
-            <!-- All elements within this div, is generated in PDF -->
-            <div class="resume" id="area-cv">
-                <div class="resume__left">
-                    <!-- HOME -->
-                    <section class="home" id="home">
-                        <div class="home_containter section bd-grid">
-                            <div class="home_data bd-grid">
-                                <img src="assets/img/muhammad.jpg" alt="" class="home_img center">
-                                <h1 class="home_title">MUHAMMAD <b>ESSA</b></h1>
-                                <h3 class="home_profession">Web Developer</h3>
-                                <!-- Button to generate and download the pdf. Available for desktop. -->
-                                <div>
-                                    <a download="" href="assets/pdf/Muhammadessa-resume.pdf" class="home_button-movil">Download</a>
-                                </div>
-                            </div>
-                            <div class="home_address bd-grid">
-                                <span class="home_information">
-                                    <i class="bx bx-map"> &nbsp; </i> Peshawar, Pakistan 
-                                </span>
-                                <span class="home_information">
-                                    <i class="bx bx-envelope"> &nbsp; </i> iMuhammadessa@gmail.com
-                                </span>
-                                <span class="home_information">
-                                    <i class="bx bx-phone"> &nbsp; </i> +92 (345) 9257074
-                                </span>
-                            </div>
-                        </div>
-                        
-                        <!-- Theme change button -->
-                        <i class="bx bx-moon change-theme" title="Theme" id="theme-button"></i>
-                        <!-- Button to generate and download the pdf. Available for desktop -->
-                        <i class="bx bx-download generate-pdf" title="Generate PDF" id="resume-button"></i>
-                    </section>          
-                    
-                    <!-- SOCIAL -->
-                    <section class="social section">
-                        <h2 class="section-title">SOCIAL</h2>
-                        <div class="social_container bd-grid">
-                            <a href="https://www.linkedin.com/in/imuhammadessa/" target="_blank" class="social_link">
-                                <i class="bx bxl-linkedin-square social_icon"></i> @imuhammadessa
-                            </a>
-                            <a href="https://github.com/imuhammadessa/" target="_blank" class="social_link">
-                                <i class="bx bxl-github social_icon"></i> @imuhammadessa
-                            </a>
-                            <a href="https://twitter.com/imuhammadessa" target="_blank" class="social_link">
-                                <i class="bx bxl-twitter social_icon"></i> @imuhammadessa
-                            </a>
-                        </div>
-                    </section>
-                    <!-- PROFILE -->
-                    <section class="profile section" id="profile">
-                        <h2 class="section-title">Profile</h2>
-                        <p class="profile_description">
-                            I am a person, very responsible for work during working hours assigned by a company. I am very goal oriented, result driven, detailed and focused person. I have several years of experiences & achievements in this field.
-                        </p>
-                    </section>
-                    
-                    <!-- EDUCATION -->
-                    <section class="education section" id="education">
-                        <h2 class="section-title">Education</h2>
-                        <div class="education_container bd-grid">
-                            <div class="education_content">
-                                <div class="education_time">
-                                    <span class="education_rounder"></span>
-                                    <span class="education_line"></span>
-                                </div>
-                                <div class="education_data bd-grid">
-                                    <h3 class="education_title">Bachelors Computer Science</h3>
-                                    <span class="education_studies">Islamia College University, Peshawar</span>
-                                    <span class="education_year">2016 - 2020</span>
-                                </div>
-                            </div>
-                            <div class="education_content">
-                                <div class="education_time">
-                                    <span class="education_rounder"></span>
-                                    <span class="education_line"></span>
-                                </div>
-                                <div class="education_data bd-grid">
-                                    <h3 class="education_title">FACULTY OF SCIENCE</h3>
-                                    <span class="education_studies">Leeds College Peshawar</span>
-                                    <span class="education_year">2014 - 2016</span>
-                                </div>
-                            </div>
-                            <div class="education_content">
-                                <div class="education_time">
-                                    <span class="education_rounder"></span>
-                                    <!-- <span class="education_line"></span> -->
-                                </div>
-                                <div class="education_data bd-grid">
-                                    <h3 class="education_title">MATRICULATION</h3>
-                                    <span class="education_studies">University Public School, Peshawar</span>
-                                    <span class="education_year">2012 - 2014</span>
-                                </div>
-                            </div>
-                        </div>
-                    </section>
-                    <!-- SKILLS  -->
-                    <section class="skills section" id="skills">
-                        <h2 class="section-title">Skills</h2>
-                        <div class="skills_content bd-grid">
-                            <ul class="skills_data">
-                                <li class="skills_name">
-                                    <span class="skills_circle"></span> HTML
-                                </li>
-                                <li class="skills_name">
-                                    <span class="skills_circle"></span> CSS
-                                </li>
-                                <li class="skills_name">
-                                    <span class="skills_circle"></span> BOOTSTRAP
-                                </li>
-                                <li class="skills_name">
-                                    <span class="skills_circle"></span> JAVASCRIPT
-                                </li>
-                            </ul>
-                            <ul class="skills_data">
-                                <li class="skills_name">
-                                    <span class="skills_circle"></span>PHP
-                                </li>
-                                <li class="skills_name">
-                                    <span class="skills_circle"></span>MYSQL
-                                </li>
-                                <li class="skills_name">
-                                    <span class="skills_circle"></span>LARAVEL
-                                </li>
-                                <li class="skills_name">
-                                    <span class="skills_circle"></span>GIT
-                                </li>
-                            </ul>
-                        </div>
-                    </section>
-                </div>
-                <div class="resume__right">
-                    <!-- EXPERIENCE -->
-                    <section class="experience section" id="experience">
-                        <h2 class="section-title">Experience</h2>
-                        <div class="experience_container bd-grid">
-                            <div class="experience_content">
-                                <div class="experience_time">
-                                    <span class="experience_rounder"></span>
-                                    <span class="experience_line"></span>
-                                </div>
-                                <div class="experience_data bd-grid">
-                                    <h3 class="experience_title">WEB DEVELOPER</h3>
-                                    <span class="experience_company">April 2021 - Till date | <a href="https://itartificer.com/">IT Artificer</a> </span>
-                                    <p class="experience_description">
-                                        After getting some experience, I hired as <b>Jr. Web Developer</b> at <a href="https://itartificer.com/">IT Artificer</a> in April 2021. ITA serving its Services all over the world especially in middle-east. ITA mainly focusing on delivering high quality software solutions which enable customers to achieve their critical IT objectives.
-                                    </p>
-                                </div>
-                            </div>
-                            <div class="experience_content">
-                                <div class="experience_time">
-                                    <span class="experience_rounder"></span>
-                                    <!-- <span class="experience_line"></span> -->
-                                </div>
-                                <div class="experience_data bd-grid">
-                                    <h3 class="experience_title">FRONTEND DEVELOPER</h3>
-                                    <span class="experience_company">Nov 2020 - Dec 2020 | <a href="https://interns.pk/">Interns Pakistan</a></span>
-                                    <p class="experience_description">
-                                        As soon I graduated I selected as <b>Frontend Developer</b> at <a href="https://interns.pk/">Interns Pakistan</a> in November 2020. Interns Pakistan is a company who helping fresh graduates remotely by providing an internships. I awarded the best intern award by Interns Pakistan.
-                                    </p>
-                                </div>
-                            </div>
-                        </div>
-                    </section>
-                    <!-- CERTIFICATES -->
-                    <section class="certificate section" id="certificate">
-                        <h2 class="section-title">Certificates</h2>
-                        <div class="certificate_container bd-grid">
-                            <div class="certificate_content">
-                                <h3 class="certificate_title">NodeJs Backend-Development - 2021</h3>
-                                <p class="certificate_description">
-                                    I had done detailed course with certification under Khyber-Pakhtunkhwa initiative in collaboration with Cybervision, KPYEP & UNDP
-                                </p>
-                            </div>
-                            <div class="certificate_content">
-                                <h3 class="certificate_title">Microsoft Student Partner - 2020</h3>
-                                <p class="certificate_description">
-                                    I worked as an active ambassador for Microsoft as Microsoft Student Partner - Pakistan for one of their great event as Microfest++
-                                </p>
-                            </div>
-                            <div class="certificate_content">
-                                <h3 class="certificate_title">WordPress Development - 2019</h3>
-                                <p class="certificate_description">
-                                    I had done detailed course with certification under Virtual University initiative in collaboration with Ministry of Information Technology Punjab, Ignite & DigiSkills.pk
-                                </p>
-                            </div>
-                            <div class="certificate_content">
-                                <h3 class="certificate_title">Web Development - 2017 </h3>
-                                <p class="certificate_description">
-                                    I had done detailed course with certification at The Mentors, Pakistan a Software House. I learnt how web applications works, developing software from scratch and testing it.
-                                </p>
-                            </div>
-                        </div>
-                    </section>
-                    <!-- REFERENCES -->
-                    <section class="references section" id="references">
-                        <h2 class="section-title">References</h2>
-                        <div class="references_container bd-grid">
-                            <div class="references_content bd-grid">
-                                <span class="references_subtitle">CEO IT-Artificer</span>
-                                <h3 class="references_title">Mr. Haider Ali</h3>
-                                <ul class="references_contact">
-                                    <li>Phone:  +92-333-9296314</li>
-                                    <li>Email:  thehaider@yahoo.com</li>
-                                </ul>
-                            </div>
-                            <div class="references_content bd-grid">
-                                <span class="references_subtitle">Professor</span>
-                                <h3 class="references_title">Dr. Irshad Ahmad</h3>
-                                <ul class="references_contact">
-                                    <li>Phone:  091-9222258</li>
-                                    <li>Email:  Irshad.ahmad@icp.edu.pk</li>
-                                </ul>
-                            </div>
-                        </div>
-                    </section>
-                    <!-- LANGUAGES -->
-                    <section class="languages section">
-                        <h2 class="section-title">Languages</h2>
-                        <div class="languages_container">
-                            <ul class="languages_content bd-grid">
-                                <li class="languages_name">
-                                    <span class="languages_circle"></span> English
-                                </li>
-                                <li class="languages_name">
-                                    <span class="languages_circle"></span> Urdu
-                                </li>
-                                <li class="languages_name">
-                                    <span class="languages_circle"></span> Pashto
-                                </li>
-                            </ul>
-                        </div>
-                    </section>
-                    
-                    <!-- INTERESTS -->
-                    <section class="interests section">
-                        <h2 class="section-title">Interests</h2>
-                        <div class="interests_container bd-grid">
-                            <div class="interests_content">
-                                <i class='bx bx-code-alt interests_icon'></i>
-                                <span class="interests_name">Coding</span>
-                            </div>
-                            <div class="interests_content">
-                                <i class='bx bxs-coffee-togo interests_icon' ></i>
-                                <span class="interests_name">Coffee</span>
-                            </div>
-                            <div class="interests_content">
-                                <i class="bx bxs-plane-alt interests_icon"></i>
-                                <span class="interests_name">Traveling</span>
-                            </div>
-                            <div class="interests_content">
-                                <i class="bx bxs-camera interests_icon "></i>
-                                <span class="interests_name">Photography</span>
-                            </div>
-                        </div>
-                    </section>
-                </div>
-            </div>        
-        </main> 
+        nav a:hover {
+            text-decoration: underline;
+        }
 
-        <!-- SCROLL TOP -->
-            <a href="#" class="scrolltop" id="scrolltop">
-                <i class="bx bx-up-arrow-alt scrolltop_icon"></i>
-            </a>
+        /* --- CONTENEURS --- */
+        .container {
+            max-width: 1100px;
+            margin: 30px auto;
+            padding: 30px;
+            background: var(--simpson-white);
+            border: 4px solid var(--simpson-black);
+            border-radius: 20px;
+            box-shadow: 10px 10px 0px var(--simpson-black);
+        }
 
-        <!-- HTML2PDF -->
-        <script src="assets/js/html2pdf.bundle.min.js"></script>
+        section {
+            display: none; /* Masqué par défaut pour simuler la navigation */
+            animation: fadeIn 0.5s;
+        }
+
+        section:target {
+            display: block; /* Affiche la section via l'ancre URL */
+        }
+
+        #accueil { display: block; } /* Accueil visible par défaut */
+
+        /* --- RECHERCHE --- */
+        .search-container {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        .search-container input, .search-container select {
+            padding: 12px;
+            width: 60%;
+            border-radius: 25px;
+            border: 3px solid var(--simpson-black);
+            font-size: 1rem;
+        }
+
+        /* --- GRILLES ET CARTES (5.2.2) --- */
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+            gap: 25px;
+            margin-top: 20px;
+        }
+
+        .card {
+            background: var(--simpson-white);
+            border: 3px solid var(--simpson-black);
+            padding: 15px;
+            text-align: center;
+            border-radius: 15px;
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+
+        .card:hover {
+            transform: translateY(-5px);
+            box-shadow: 5px 5px 0px var(--simpson-red);
+        }
+
+        .card img {
+            width: 100%;
+            height: 180px;
+            object-fit: contain;
+            background: #eee;
+            border-radius: 10px;
+            margin-bottom: 10px;
+        }
+
+        /* --- FICHE DÉTAIL (5.2.3) --- */
+        .detail-layout {
+            display: flex;
+            gap: 40px;
+            flex-wrap: wrap;
+        }
+
+        .detail-img {
+            flex: 1;
+            min-width: 300px;
+            border: 5px solid var(--simpson-black);
+            border-radius: 15px;
+        }
+
+        .detail-info {
+            flex: 2;
+        }
+
+        /* --- RÉPLIQUES ET VOTES (5.2.4) --- */
+        .quote-box {
+            background: #f9f9f9;
+            border-left: 8px solid var(--simpson-blue);
+            padding: 20px;
+            margin-bottom: 20px;
+            border-radius: 5px;
+            position: relative;
+        }
+
+        .vote-btns {
+            margin-top: 15px;
+        }
+
+        .btn {
+            background-color: var(--simpson-red);
+            color: white;
+            border: 2px solid var(--simpson-black);
+            padding: 10px 20px;
+            border-radius: 10px;
+            cursor: pointer;
+            font-weight: bold;
+            text-transform: uppercase;
+        }
+
+        .btn:hover { background-color: var(--simpson-black); }
+
+        .btn-vote {
+            background: none;
+            border: 1px solid #ccc;
+            padding: 5px 10px;
+            cursor: pointer;
+            border-radius: 5px;
+            margin-right: 10px;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+    </style>
+</head>
+<body>
+
+<header>
+    <h1>BART SIMPSON : FILS D'HOMER</h1>
+    <p>Le portail hypermédia du Tome 3</p>
+</header>
+
+<nav>
+    <a href="#accueil">Accueil</a>
+    <a href="#personnages">Personnages</a>
+    <a href="#repliques">Répliques</a>
+</nav>
+
+<div class="container">
+
+    <section id="accueil">
+        <h2>Bienvenue dans l'exploration interactive</h2>
+        <p>Ce site vous permet de naviguer à travers les histoires, les personnages et les lieux de la bande dessinée de manière non linéaire.</p>
         
-        <!-- MAIN JS -->
-        <script src="assets/js/main.js"></script>
-    </body> <br>
+        <div class="card" style="max-width: 500px; margin: 40px auto;">
+            <h3>Réplique Recommandée</h3>
+            <p>"Ay Caramba ! J'ai encore glissé sur mon skateboard !"</p>
+            <a href="#repliques" class="btn">Voir les répliques</a>
+        </div>
+    </section>
+
+    <section id="personnages">
+        <div class="search-container">
+            <h2>Annuaire des Personnages</h2>
+            <input type="text" placeholder="Rechercher un personnage (ex: Homer, Milhouse...)">
+        </div>
+        
+        <div class="grid">
+            <div class="card">
+                <img src="https://upload.wikimedia.org/wikipedia/en/a/aa/Bart_Simpson_200px.png" alt="Bart">
+                <h3>Bart Simpson</h3>
+                <a href="#detail-bart" class="btn">Voir la fiche</a>
+            </div>
+            <div class="card">
+                <img src="https://upload.wikimedia.org/wikipedia/en/0/02/Homer_Simpson_200px.png" alt="Homer">
+                <h3>Homer Simpson</h3>
+                <button class="btn">Voir la fiche</button>
+            </div>
+            <div class="card">
+                <img src="https://upload.wikimedia.org/wikipedia/en/e/ec/Lisa_Simpson.png" alt="Lisa">
+                <h3>Lisa Simpson</h3>
+                <button class="btn">Voir la fiche</button>
+            </div>
+        </div>
+    </section>
+
+    <section id="detail-bart">
+        <a href="#personnages">← Retour au catalogue</a>
+        <div class="detail-layout" style="margin-top:20px;">
+            <div class="detail-img">
+                <img src="https://upload.wikimedia.org/wikipedia/en/a/aa/Bart_Simpson_200px.png" style="width:100%" alt="Bart">
+            </div>
+            <div class="detail-info">
+                <h2>Bart Simpson</h2>
+                <p><strong>Description :</strong> Fils aîné de la famille. Passionné par les farces, le skateboard et Krusty le Clown.</p>
+                <p><strong>Histoires liées :</strong> 
+                    <a href="#">Bart contre les donuts</a>, 
+                    <a href="#">La vengeance de Nelson</a>
+                </p>
+                <p><strong>Objets fétiches :</strong> Lance-pierre, Skateboard bleu.</p>
+                <button class="btn">⭐ Ajouter aux favoris</button>
+            </div>
+        </div>
+        
+        <div style="margin-top: 40px;">
+            <h3>Personnages fréquemment associés</h3>
+            <div class="grid">
+                <div class="card"><h4>Milhouse Van Houten</h4></div>
+                <div class="card"><h4>Nelson Muntz</h4></div>
+            </div>
+        </div>
+    </section>
+
+    <section id="repliques">
+        <h2>Moteur de recherche de Répliques</h2>
+        <div class="search-container">
+            <input type="text" placeholder="Rechercher par mot-clé (ex: Donut, Bière...)">
+            <br><br>
+            <select>
+                <option>Tous les personnages</option>
+                <option>Homer</option>
+                <option>Bart</option>
+            </select>
+        </div>
+
+        <div class="quote-box">
+            <p><strong>"Mmm... un donut ! Est-ce qu'il y a quelque chose qu'ils ne peuvent pas faire ?"</strong></p>
+            <p><small>Personnage : Homer Simpson | Histoire : Tome 3 - Scène 4</small></p>
+            <div class="vote-btns">
+                <button class="btn-vote">👍 152</button>
+                <button class="btn-vote">👎 3</button>
+                <button class="btn" style="font-size: 0.8em; float: right;">Favori</button>
+            </div>
+        </div>
+
+        <div class="quote-box">
+            <p><strong>"Va te faire shampooiner !"</strong></p>
+            <p><small>Personnage : Bart Simpson | Histoire : Tome 3 - Page 12</small></p>
+            <div class="vote-btns">
+                <button class="btn-vote">👍 89</button>
+                <button class="btn-vote">👎 1</button>
+                <button class="btn" style="font-size: 0.8em; float: right;">Favori</button>
+            </div>
+        </div>
+    </section>
+
+</div>
+
+<footer style="text-align: center; padding: 20px; color: var(--simpson-black);">
+    <p>Projet Hypermédia - Master 1 Université Paris 8</p>
+</footer>
+
+</body>
 </html>
