@@ -1,1 +1,305 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hypermédia - Bart Simpson : Fils d'Homer</title>
+    <style>
+        /* --- DESIGN SYSTEM SIMPSONS --- */
+        :root {
+            --simpson-yellow: #FFD90F; /* Peau */
+            --simpson-blue: #007DC3;   /* Pantalon Homer / Ciel */
+            --simpson-red: #ED1C24;    /* T-shirt Bart */
+            --simpson-white: #FFFFFF;
+            --simpson-black: #000000;
+        }
 
+        body {
+            font-family: 'Comic Sans MS', 'Arial', sans-serif;
+            background-color: var(--simpson-yellow);
+            margin: 0;
+            padding: 0;
+            color: var(--simpson-black);
+        }
+
+        /* --- HEADER & NAV --- */
+        header {
+            background-color: var(--simpson-blue);
+            color: white;
+            padding: 30px;
+            text-align: center;
+            border-bottom: 6px solid var(--simpson-black);
+            text-shadow: 2px 2px var(--simpson-black);
+        }
+
+        nav {
+            display: flex;
+            justify-content: center;
+            background: var(--simpson-red);
+            padding: 15px;
+            border-bottom: 4px solid var(--simpson-black);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        nav a {
+            color: white;
+            text-decoration: none;
+            margin: 0 20px;
+            font-weight: bold;
+            text-transform: uppercase;
+            font-size: 1.1em;
+        }
+
+        nav a:hover {
+            text-decoration: underline;
+        }
+
+        /* --- CONTENEURS --- */
+        .container {
+            max-width: 1100px;
+            margin: 30px auto;
+            padding: 30px;
+            background: var(--simpson-white);
+            border: 4px solid var(--simpson-black);
+            border-radius: 20px;
+            box-shadow: 10px 10px 0px var(--simpson-black);
+        }
+
+        section {
+            display: none; /* Masqué par défaut pour simuler la navigation */
+            animation: fadeIn 0.5s;
+        }
+
+        section:target {
+            display: block; /* Affiche la section via l'ancre URL */
+        }
+
+        #accueil { display: block; } /* Accueil visible par défaut */
+
+        /* --- RECHERCHE --- */
+        .search-container {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        .search-container input, .search-container select {
+            padding: 12px;
+            width: 60%;
+            border-radius: 25px;
+            border: 3px solid var(--simpson-black);
+            font-size: 1rem;
+        }
+
+        /* --- GRILLES ET CARTES (5.2.2) --- */
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+            gap: 25px;
+            margin-top: 20px;
+        }
+
+        .card {
+            background: var(--simpson-white);
+            border: 3px solid var(--simpson-black);
+            padding: 15px;
+            text-align: center;
+            border-radius: 15px;
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+
+        .card:hover {
+            transform: translateY(-5px);
+            box-shadow: 5px 5px 0px var(--simpson-red);
+        }
+
+        .card img {
+            width: 100%;
+            height: 180px;
+            object-fit: contain;
+            background: #eee;
+            border-radius: 10px;
+            margin-bottom: 10px;
+        }
+
+        /* --- FICHE DÉTAIL (5.2.3) --- */
+        .detail-layout {
+            display: flex;
+            gap: 40px;
+            flex-wrap: wrap;
+        }
+
+        .detail-img {
+            flex: 1;
+            min-width: 300px;
+            border: 5px solid var(--simpson-black);
+            border-radius: 15px;
+        }
+
+        .detail-info {
+            flex: 2;
+        }
+
+        /* --- RÉPLIQUES ET VOTES (5.2.4) --- */
+        .quote-box {
+            background: #f9f9f9;
+            border-left: 8px solid var(--simpson-blue);
+            padding: 20px;
+            margin-bottom: 20px;
+            border-radius: 5px;
+            position: relative;
+        }
+
+        .vote-btns {
+            margin-top: 15px;
+        }
+
+        .btn {
+            background-color: var(--simpson-red);
+            color: white;
+            border: 2px solid var(--simpson-black);
+            padding: 10px 20px;
+            border-radius: 10px;
+            cursor: pointer;
+            font-weight: bold;
+            text-transform: uppercase;
+        }
+
+        .btn:hover { background-color: var(--simpson-black); }
+
+        .btn-vote {
+            background: none;
+            border: 1px solid #ccc;
+            padding: 5px 10px;
+            cursor: pointer;
+            border-radius: 5px;
+            margin-right: 10px;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+    </style>
+</head>
+<body>
+
+<header>
+    <h1>BART SIMPSON : FILS D'HOMER</h1>
+    <p>Le portail hypermédia du Tome 3</p>
+</header>
+
+<nav>
+    <a href="#accueil">Accueil</a>
+    <a href="#personnages">Personnages</a>
+    <a href="#repliques">Répliques</a>
+</nav>
+
+<div class="container">
+
+    <section id="accueil">
+        <h2>Bienvenue dans l'exploration interactive</h2>
+        <p>Ce site vous permet de naviguer à travers les histoires, les personnages et les lieux de la bande dessinée de manière non linéaire.</p>
+        
+        <div class="card" style="max-width: 500px; margin: 40px auto;">
+            <h3>Réplique Recommandée</h3>
+            <p>"Ay Caramba ! J'ai encore glissé sur mon skateboard !"</p>
+            <a href="#repliques" class="btn">Voir les répliques</a>
+        </div>
+    </section>
+
+    <section id="personnages">
+        <div class="search-container">
+            <h2>Annuaire des Personnages</h2>
+            <input type="text" placeholder="Rechercher un personnage (ex: Homer, Milhouse...)">
+        </div>
+        
+        <div class="grid">
+            <div class="card">
+                <img src="https://upload.wikimedia.org/wikipedia/en/a/aa/Bart_Simpson_200px.png" alt="Bart">
+                <h3>Bart Simpson</h3>
+                <a href="#detail-bart" class="btn">Voir la fiche</a>
+            </div>
+            <div class="card">
+                <img src="https://upload.wikimedia.org/wikipedia/en/0/02/Homer_Simpson_200px.png" alt="Homer">
+                <h3>Homer Simpson</h3>
+                <button class="btn">Voir la fiche</button>
+            </div>
+            <div class="card">
+                <img src="https://upload.wikimedia.org/wikipedia/en/e/ec/Lisa_Simpson.png" alt="Lisa">
+                <h3>Lisa Simpson</h3>
+                <button class="btn">Voir la fiche</button>
+            </div>
+        </div>
+    </section>
+
+    <section id="detail-bart">
+        <a href="#personnages">← Retour au catalogue</a>
+        <div class="detail-layout" style="margin-top:20px;">
+            <div class="detail-img">
+                <img src="https://upload.wikimedia.org/wikipedia/en/a/aa/Bart_Simpson_200px.png" style="width:100%" alt="Bart">
+            </div>
+            <div class="detail-info">
+                <h2>Bart Simpson</h2>
+                <p><strong>Description :</strong> Fils aîné de la famille. Passionné par les farces, le skateboard et Krusty le Clown.</p>
+                <p><strong>Histoires liées :</strong> 
+                    <a href="#">Bart contre les donuts</a>, 
+                    <a href="#">La vengeance de Nelson</a>
+                </p>
+                <p><strong>Objets fétiches :</strong> Lance-pierre, Skateboard bleu.</p>
+                <button class="btn">⭐ Ajouter aux favoris</button>
+            </div>
+        </div>
+        
+        <div style="margin-top: 40px;">
+            <h3>Personnages fréquemment associés</h3>
+            <div class="grid">
+                <div class="card"><h4>Milhouse Van Houten</h4></div>
+                <div class="card"><h4>Nelson Muntz</h4></div>
+            </div>
+        </div>
+    </section>
+
+    <section id="repliques">
+        <h2>Moteur de recherche de Répliques</h2>
+        <div class="search-container">
+            <input type="text" placeholder="Rechercher par mot-clé (ex: Donut, Bière...)">
+            <br><br>
+            <select>
+                <option>Tous les personnages</option>
+                <option>Homer</option>
+                <option>Bart</option>
+            </select>
+        </div>
+
+        <div class="quote-box">
+            <p><strong>"Mmm... un donut ! Est-ce qu'il y a quelque chose qu'ils ne peuvent pas faire ?"</strong></p>
+            <p><small>Personnage : Homer Simpson | Histoire : Tome 3 - Scène 4</small></p>
+            <div class="vote-btns">
+                <button class="btn-vote">👍 152</button>
+                <button class="btn-vote">👎 3</button>
+                <button class="btn" style="font-size: 0.8em; float: right;">Favori</button>
+            </div>
+        </div>
+
+        <div class="quote-box">
+            <p><strong>"Va te faire shampooiner !"</strong></p>
+            <p><small>Personnage : Bart Simpson | Histoire : Tome 3 - Page 12</small></p>
+            <div class="vote-btns">
+                <button class="btn-vote">👍 89</button>
+                <button class="btn-vote">👎 1</button>
+                <button class="btn" style="font-size: 0.8em; float: right;">Favori</button>
+            </div>
+        </div>
+    </section>
+
+</div>
+
+<footer style="text-align: center; padding: 20px; color: var(--simpson-black);">
+    <p>Projet Hypermédia - Master 1 Université Paris 8</p>
+</footer>
+
+</body>
+</html>
