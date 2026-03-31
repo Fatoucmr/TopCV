@@ -3,311 +3,273 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Simpsoncity - Bart Simpson Fils d'Homer</title>
-    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&family=Roboto:wght@300;400&display=swap" rel="stylesheet">
-    
+    <title>Simpsoncity | Bart Simpson - Fils d'Homer</title>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@700&family=Open+Sans:wght@400;600&display=swap" rel="stylesheet">
     <style>
-        /* --- DESIGN & COULEURS (Chapitre 5) --- */
         :root {
-            --simpson-yellow: #FFD90F; /* Jaune officiel */
-            --simpson-blue: #007DC3;   /* Bleu officiel */
-            --simpson-red: #ED1C24;    /* Rouge accentuation */
+            --yellow: #FFD90F;
+            --blue: #007DC3;
             --white: #FFFFFF;
-            --light-grey: #F4F4F9;
-            --dark-grey: #333;
+            --dark: #202020;
+            --grey: #f4f4f9;
+            --transition: all 0.3s ease;
         }
 
-        * { box-sizing: border-box; margin: 0; padding: 0; }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: 'Open Sans', sans-serif; background: var(--grey); color: var(--dark); overflow-x: hidden; }
 
-        body {
-            font-family: 'Roboto', sans-serif;
-            background-color: var(--light-grey);
-            color: var(--dark-grey);
-            line-height: 1.6;
-        }
-
-        /* --- NAVIGATION ERGONOMIQUE (5.2.1) --- */
+        /* HEADER & NAV */
         header {
-            background-color: var(--simpson-blue);
+            background: var(--blue);
+            color: white;
             padding: 1rem 5%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
             position: sticky;
             top: 0;
             z-index: 1000;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            box-shadow: 0 4px 10px rgba(0,0,0,0.1);
         }
 
-        .navbar {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
+        .logo { font-family: 'Montserrat', sans-serif; font-size: 1.5rem; cursor: pointer; }
+        .logo span { color: var(--yellow); }
 
-        .logo {
-            font-family: 'Montserrat', sans-serif;
-            font-size: 1.8rem;
-            font-weight: bold;
-            color: var(--white);
-            text-decoration: none;
-        }
+        nav ul { display: flex; list-style: none; }
+        nav ul li { margin-left: 20px; }
+        nav ul li a { color: white; text-decoration: none; font-weight: 600; transition: var(--transition); cursor: pointer; }
+        nav ul li a:hover { color: var(--yellow); }
 
-        .logo span { color: var(--simpson-yellow); }
+        /* SECTIONS MANAGEMENT */
+        .page-section { display: none; padding: 40px 5%; min-height: 80vh; animation: fadeIn 0.5s ease; }
+        .page-section.active { display: block; }
 
-        .nav-links {
-            list-style: none;
-            display: flex;
-        }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
 
-        .nav-links li { margin-left: 25px; }
-
-        .nav-links a {
-            color: var(--white);
-            text-decoration: none;
-            font-weight: 500;
-            transition: color 0.3s;
-        }
-
-        .nav-links a:hover { color: var(--simpson-yellow); }
-
-        /* --- HERO & RECHERCHE (5.2.1) --- */
-        .hero {
-            background: linear-gradient(rgba(0, 125, 195, 0.8), rgba(0, 125, 195, 0.8)), url('https://via.placeholder.com/1500x500?text=Springfield+City');
+        /* HOME / HERO */
+        .hero { 
+            text-align: center; 
+            background: linear-gradient(rgba(0,0,0,0.6), rgba(0,0,0,0.6)), url('https://images.unsplash.com/photo-1594732832278-abd644401426?auto=format&fit=crop&q=80&w=1000');
             background-size: cover;
+            background-position: center;
             color: white;
-            padding: 60px 20px;
-            text-align: center;
+            padding: 100px 20px;
+            border-radius: 15px;
+            margin-bottom: 30px;
         }
 
-        .hero h1 { font-family: 'Montserrat', sans-serif; margin-bottom: 20px; font-size: 2.5rem; }
-
-        .search-container {
-            max-width: 600px;
-            margin: 0 auto;
+        .search-bar {
+            margin-top: 30px;
             display: flex;
+            justify-content: center;
         }
 
-        .search-container input {
-            flex: 1;
-            padding: 15px;
-            border: none;
+        .search-bar input {
+            padding: 15px 25px;
+            width: 400px;
             border-radius: 30px 0 0 30px;
+            border: none;
+            outline: none;
             font-size: 1rem;
         }
 
-        .search-container button {
+        .search-bar button {
             padding: 15px 30px;
+            background: var(--yellow);
             border: none;
-            background-color: var(--simpson-yellow);
-            color: var(--dark-grey);
-            font-weight: bold;
             border-radius: 0 30px 30px 0;
+            font-weight: bold;
             cursor: pointer;
-            transition: background 0.3s;
         }
 
-        .search-container button:hover { background-color: #e5c20d; }
-
-        /* --- CATALOGUE PERSONNAGES (5.2.2) --- */
-        .container { max-width: 1200px; margin: 40px auto; padding: 0 20px; }
-
-        .section-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 30px;
-            border-bottom: 3px solid var(--simpson-yellow);
-            padding-bottom: 10px;
-        }
-
-        .grid-gallery {
+        /* GRID SYSTEM */
+        .grid {
             display: grid;
             grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
             gap: 25px;
+            margin-top: 30px;
         }
 
-        /* --- CARTES MODERNES --- */
         .card {
             background: var(--white);
             border-radius: 15px;
-            overflow: hidden;
-            box-shadow: 0 4px 6px rgba(0,0,0,0.05);
-            transition: transform 0.3s, box-shadow 0.3s;
-            cursor: pointer;
-        }
-
-        .card:hover {
-            transform: translateY(-10px);
-            box-shadow: 0 10px 20px rgba(0,0,0,0.1);
-        }
-
-        .card img {
-            width: 100%;
-            height: 250px;
-            object-fit: contain;
-            background-color: #f9f9f9;
-            padding: 10px;
-        }
-
-        .card-info { padding: 20px; text-align: center; }
-        .card-info h3 { margin-bottom: 10px; color: var(--simpson-blue); }
-
-        /* --- RECOMMANDATIONS & VOTES (5.3 / 5.2.4) --- */
-        .sidebar-reco {
-            background: var(--white);
             padding: 20px;
-            border-radius: 15px;
-            margin-top: 40px;
+            text-align: center;
+            transition: var(--transition);
+            cursor: pointer;
+            border-bottom: 5px solid var(--yellow);
+            box-shadow: 0 4px 6px rgba(0,0,0,0.05);
         }
 
-        .quote-item {
+        .card:hover { transform: translateY(-10px); box-shadow: 0 10px 20px rgba(0,0,0,0.1); }
+        .card img { width: 150px; height: 150px; object-fit: contain; margin-bottom: 15px; }
+
+        /* FICHE DETAIL (Chapitre 5.2.3) */
+        .detail-container {
+            background: white;
+            padding: 40px;
+            border-radius: 20px;
+            display: flex;
+            gap: 40px;
+            flex-wrap: wrap;
+        }
+
+        .detail-img { flex: 1; min-width: 300px; text-align: center; }
+        .detail-img img { max-width: 100%; border-radius: 15px; }
+        .detail-info { flex: 2; min-width: 300px; }
+        .detail-info h2 { font-family: 'Montserrat'; color: var(--blue); margin-bottom: 20px; }
+        .back-btn { margin-bottom: 20px; display: inline-block; cursor: pointer; color: var(--blue); font-weight: bold; }
+
+        /* REPLIQUES / VOTES */
+        .quote-card {
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            margin-bottom: 15px;
             display: flex;
             justify-content: space-between;
             align-items: center;
-            padding: 15px;
-            border-bottom: 1px solid #eee;
         }
 
-        .vote-btns button {
-            background: none;
-            border: 1px solid #ddd;
-            padding: 5px 10px;
-            border-radius: 5px;
-            cursor: pointer;
-            margin-left: 5px;
-        }
+        .vote-count { font-weight: bold; color: var(--blue); margin: 0 10px; }
 
-        .vote-btns button:hover { background: var(--light-grey); }
-
-        footer {
-            text-align: center;
-            padding: 40px;
-            background: var(--dark-grey);
-            color: var(--white);
-            margin-top: 60px;
-        }
-
-        /* Responsive */
-        @media (max-width: 768px) {
-            .navbar { flex-direction: column; }
-            .nav-links { margin-top: 20px; }
-            .nav-links li { margin: 0 10px; }
-        }
+        footer { background: var(--dark); color: white; text-align: center; padding: 30px; margin-top: 50px; }
     </style>
 </head>
 <body>
 
     <header>
-        <nav class="navbar">
-            <a href="#" class="logo">Simpson<span>city</span></a>
-            <ul class="nav-links">
-                <li><a href="#histoires">Histoires</a></li>
-                <li><a href="#personnages">Personnages</a></li>
-                <li><a href="#lieux">Lieux</a></li>
-                <li><a href="#repliques">Répliques</a></li>
+        <div class="logo" onclick="showSection('home')">Simpson<span>city</span></div>
+        <nav>
+            <ul>
+                <li><a onclick="showSection('home')">Accueil</a></li>
+                <li><a onclick="showSection('chars')">Personnages</a></li>
+                <li><a onclick="showSection('places')">Lieux</a></li>
+                <li><a onclick="showSection('quotes')">Répliques</a></li>
             </ul>
         </nav>
     </header>
 
-    <section class="hero">
-        <h1>Bart Simpson : Fils d'Homer</h1>
-        <p>Explorez l'univers hypermédia du Tome 3 de la BD</p><br>
-        <div class="search-container">
-            <input type="text" id="searchInput" placeholder="Rechercher un personnage, un lieu..." onkeyup="filterContent()">
-            <button>Explorer</button>
+    <section id="home" class="page-section active">
+        <div class="hero">
+            <h1>Bart Simpson : Fils d'Homer</h1>
+            <p>Découvrez le Tome 3 de la BD de manière interactive et sémantique.</p>
+            <div class="search-bar">
+                <input type="text" placeholder="Rechercher un personnage ou une scène..." id="globalSearch">
+                <button onclick="showSection('chars')">Rechercher</button>
+            </div>
+        </div>
+        <h2>Aujourd'hui à Springfield</h2>
+        <div class="grid">
+            <div class="card" onclick="showDetail('Bart Simpson', 'Le fils aîné turbulent.', 'https://upload.wikimedia.org/wikipedia/en/a/aa/Bart_Simpson_200px.png')">
+                <h3>Bart Simpson</h3>
+                <p>Nouveau contenu disponible</p>
+            </div>
+            <div class="card" onclick="showSection('places')">
+                <h3>Maison des Simpson</h3>
+                <p>Explorer le lieu culte</p>
+            </div>
         </div>
     </section>
 
-    <main id="personnages" class="container">
-        <div class="section-header">
-            <h2>Catalogue des Personnages</h2>
-        </div>
-        
-        <div class="grid-gallery" id="characterGrid">
-            <div class="card" data-name="Bart Simpson">
+    <section id="chars" class="page-section">
+        <h2>Catalogue des Personnages</h2>
+        <div class="grid">
+            <div class="card" onclick="showDetail('Bart Simpson', 'Personnage principal du Tome 3. Connu pour ses farces et son skateboard.', 'https://upload.wikimedia.org/wikipedia/en/a/aa/Bart_Simpson_200px.png')">
                 <img src="https://upload.wikimedia.org/wikipedia/en/a/aa/Bart_Simpson_200px.png" alt="Bart">
-                <div class="card-info">
-                    <h3>Bart Simpson</h3>
-                    <p>Fils aîné et farceur de la famille.</p>
-                </div>
+                <h3>Bart Simpson</h3>
             </div>
-
-            <div class="card" data-name="Homer Simpson">
+            <div class="card" onclick="showDetail('Homer Simpson', 'Père de Bart, travaille à la centrale nucléaire.', 'https://upload.wikimedia.org/wikipedia/en/0/02/Homer_Simpson_200px.png')">
                 <img src="https://upload.wikimedia.org/wikipedia/en/0/02/Homer_Simpson_200px.png" alt="Homer">
-                <div class="card-info">
-                    <h3>Homer Simpson</h3>
-                    <p>Le père de famille dévoué (aux donuts).</p>
-                </div>
+                <h3>Homer Simpson</h3>
             </div>
-
-            <div class="card" data-name="Marge Simpson">
-                <img src="https://upload.wikimedia.org/wikipedia/en/0/0b/Marge_Simpson.png" alt="Marge">
-                <div class="card-info">
-                    <h3>Marge Simpson</h3>
-                    <p>Le pilier de la famille Simpson.</p>
-                </div>
-            </div>
-
-            <div class="card" data-name="Lisa Simpson">
+            <div class="card" onclick="showDetail('Lisa Simpson', 'La soeur de Bart, saxophoniste et génie.', 'https://upload.wikimedia.org/wikipedia/en/e/ec/Lisa_Simpson.png')">
                 <img src="https://upload.wikimedia.org/wikipedia/en/e/ec/Lisa_Simpson.png" alt="Lisa">
-                <div class="card-info">
-                    <h3>Lisa Simpson</h3>
-                    <p>L'intelligence et la conscience de la maison.</p>
-                </div>
+                <h3>Lisa Simpson</h3>
             </div>
         </div>
+    </section>
 
-        <section id="repliques" class="sidebar-reco">
-            <div class="section-header">
-                <h2>Répliques les plus consultées</h2>
+    <section id="places" class="page-section">
+        <h2>Lieux Emblématiques</h2>
+        <div class="grid">
+            <div class="card"><h3>École de Springfield</h3></div>
+            <div class="card"><h3>Kwik-E-Mart</h3></div>
+            <div class="card"><h3>Centrale Nucléaire</h3></div>
+        </div>
+    </section>
+
+    <section id="quotes" class="page-section">
+        <h2>Répliques Populaires</h2>
+        <div class="quote-card">
+            <p>"Ay Caramba !" - <strong>Bart</strong></p>
+            <div>
+                <button onclick="vote(this)">👍</button>
+                <span class="vote-count">124</span>
             </div>
-            <div class="quote-item">
-                <p><strong>Bart :</strong> "Ay Caramba !"</p>
-                <div class="vote-btns">
-                    <button>👍 <span class="count">124</span></button>
-                    <button>👎</button>
-                </div>
+        </div>
+        <div class="quote-card">
+            <p>"D'oh !" - <strong>Homer</strong></p>
+            <div>
+                <button onclick="vote(this)">👍</button>
+                <span class="vote-count">89</span>
             </div>
-            <div class="quote-item">
-                <p><strong>Homer :</strong> "D'oh !"</p>
-                <div class="vote-btns">
-                    <button>👍 <span class="count">89</span></button>
-                    <button>👎</button>
-                </div>
+        </div>
+    </section>
+
+    <section id="detail" class="page-section">
+        <div class="back-btn" onclick="showSection('chars')">← Retour au catalogue</div>
+        <div class="detail-container">
+            <div class="detail-img">
+                <img src="" id="charImg" alt="Image">
             </div>
-        </section>
-    </main>
+            <div class="detail-info">
+                <h2 id="charName">Nom du Personnage</h2>
+                <p id="charDesc">Description complète...</p>
+                <br>
+                <h3>Informations Sémantiques</h3>
+                <ul>
+                    <li><strong>Famille :</strong> Simpson</li>
+                    <li><strong>Rôle :</strong> Protagoniste</li>
+                </ul>
+            </div>
+        </div>
+    </section>
 
     <footer>
-        <p>&copy; 2024 Simpsoncity - Projet Master 1 Hypermédia - Université Paris 8 [cite: 2]</p>
-        <p><small>Basé sur le Tome 3 : Fils d'Homer</small></p>
+        <p>&copy; 2024 Simpsoncity - Projet Master 1 Hypermédia - Université Paris 8</p>
     </footer>
 
     <script>
-        // Fonction de filtrage en temps réel (Chapitre 5.2.2)
-        function filterContent() {
-            let input = document.getElementById('searchInput').value.toLowerCase();
-            let cards = document.querySelectorAll('.card');
+        // Gestion de la navigation (Redirection interne)
+        function showSection(sectionId) {
+            // Cacher toutes les sections
+            const sections = document.querySelectorAll('.page-section');
+            sections.forEach(section => section.classList.remove('active'));
             
-            cards.forEach(card => {
-                let name = card.getAttribute('data-name').toLowerCase();
-                if (name.includes(input)) {
-                    card.style.display = "block";
-                } else {
-                    card.style.display = "none";
-                }
-            });
+            // Afficher la section demandée
+            document.getElementById(sectionId).classList.add('active');
+            
+            // Scroll en haut
+            window.scrollTo(0,0);
         }
 
-        // Simulation simple du système de vote (Chapitre 5.3)
-        document.querySelectorAll('.vote-btns button').forEach(btn => {
-            btn.addEventListener('click', function() {
-                let countSpan = this.querySelector('.count');
-                if(countSpan) {
-                    let current = parseInt(countSpan.innerText);
-                    countSpan.innerText = current + 1;
-                    this.style.color = "var(--simpson-blue)";
-                }
-            });
-        });
+        // Affichage dynamique des détails (Fiche personnage)
+        function showDetail(name, desc, img) {
+            document.getElementById('charName').innerText = name;
+            document.getElementById('charDesc').innerText = desc;
+            document.getElementById('charImg').src = img;
+            showSection('detail');
+        }
+
+        // Système de vote
+        function vote(btn) {
+            let span = btn.nextElementSibling;
+            let current = parseInt(span.innerText);
+            span.innerText = current + 1;
+            btn.disabled = true;
+            btn.style.opacity = "0.5";
+        }
     </script>
 </body>
 </html>
