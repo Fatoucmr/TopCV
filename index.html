@@ -7,74 +7,74 @@
 <style>
 body {
     font-family: Arial;
-    margin:0;
+    margin: 0;
 }
 
 /* HEADER */
 header {
-    background:#003087;
-    color:white;
-    padding:15px;
-    display:flex;
-    justify-content:space-between;
+    background: #003087;
+    color: white;
+    padding: 15px;
+    display: flex;
+    justify-content: space-between;
 }
 
 nav button {
-    margin-left:10px;
-    padding:8px;
+    margin-left: 10px;
+    padding: 8px;
 }
 
 /* PAGE */
 .page {
-    display:none;
-    padding:20px;
+    display: none;
+    padding: 20px;
 }
 
 .active {
-    display:block;
+    display: block;
 }
 
 /* HERO */
 .hero {
-    background:#C8102E;
-    color:white;
-    padding:30px;
-    text-align:center;
+    background: #C8102E;
+    color: white;
+    padding: 30px;
+    text-align: center;
 }
 
 /* PRODUITS */
 .products {
-    display:flex;
-    gap:15px;
-    flex-wrap:wrap;
+    display: flex;
+    gap: 15px;
+    flex-wrap: wrap;
 }
 
 .card {
-    border:1px solid #ccc;
-    padding:10px;
-    width:180px;
+    border: 1px solid #ccc;
+    padding: 10px;
+    width: 180px;
 }
 
 button {
-    background:#C8102E;
-    color:white;
-    border:none;
-    padding:8px;
-    cursor:pointer;
+    background: #C8102E;
+    color: white;
+    border: none;
+    padding: 8px;
+    cursor: pointer;
 }
 
 /* INGREDIENTS */
 .ingredients span {
-    display:block;
-    padding:5px;
-    margin:5px 0;
-    background:#f5f5f5;
-    cursor:pointer;
+    display: block;
+    padding: 5px;
+    margin: 5px 0;
+    background: #f5f5f5;
+    cursor: pointer;
 }
 
 .ingredients span:hover {
-    background:#C8102E;
-    color:white;
+    background: #C8102E;
+    color: white;
 }
 </style>
 </head>
@@ -169,25 +169,25 @@ button {
 <script>
 let panier = [];
 
-function showPage(pageId){
+function showPage(pageId) {
     document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
     document.getElementById(pageId).classList.add('active');
 }
 
-function addToCart(produit){
+function addToCart(produit) {
     panier.push(produit);
     alert(produit + " ajouté au panier");
     updateCart();
 }
 
-function addAll(){
+function addAll() {
     let produits = ["Quinoa", "Houmous", "Avocat"];
     panier.push(...produits);
     alert("Tous les ingrédients ajoutés !");
     updateCart();
 }
 
-function updateCart(){
+function updateCart() {
     let cart = document.getElementById("cart");
     cart.innerHTML = "";
     panier.forEach(p => {
