@@ -1,202 +1,441 @@
 <!DOCTYPE html>
 <html lang="fr">
 <head>
-<meta charset="UTF-8">
-<title>Carrefour Extra</title>
+  <meta charset="UTF-8">
+  <title>Bart Simpson – Fils d'Homer • Tome 3</title>
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+    }
 
-<style>
-body {
-    font-family: Arial;
-    margin: 0;
-}
+    body {
+      background: #f7f7ff;
+      color: #222;
+      line-height: 1.5;
+    }
 
-/* HEADER */
-header {
-    background: #003087;
-    color: white;
-    padding: 15px;
-    display: flex;
-    justify-content: space-between;
-}
+    header {
+      background: #ffcc00;
+      padding: 1.5rem;
+      text-align: center;
+      border-bottom: 4px solid #0055aa;
+    }
 
-nav button {
-    margin-left: 10px;
-    padding: 8px;
-}
+    header h1 {
+      font-size: 2rem;
+      margin-bottom: 0.3rem;
+    }
 
-/* PAGE */
-.page {
-    display: none;
-    padding: 20px;
-}
+    header p {
+      font-size: 0.95rem;
+    }
 
-.active {
-    display: block;
-}
+    .tabs {
+      display: flex;
+      justify-content: center;
+      gap: 0.5rem;
+      padding: 0.75rem;
+      background: #0055aa;
+    }
 
-/* HERO */
-.hero {
-    background: #C8102E;
-    color: white;
-    padding: 30px;
-    text-align: center;
-}
+    .tab-button {
+      border: none;
+      padding: 0.5rem 1rem;
+      background: #ffffff33;
+      color: #fff;
+      cursor: pointer;
+      border-radius: 999px;
+      font-size: 0.9rem;
+      transition: background 0.2s, transform 0.1s;
+    }
 
-/* PRODUITS */
-.products {
-    display: flex;
-    gap: 15px;
-    flex-wrap: wrap;
-}
+    .tab-button.active {
+      background: #ffcc00;
+      color: #222;
+      font-weight: 600;
+    }
 
-.card {
-    border: 1px solid #ccc;
-    padding: 10px;
-    width: 180px;
-}
+    .tab-button:hover {
+      background: #ffffff66;
+      transform: translateY(-1px);
+    }
 
-button {
-    background: #C8102E;
-    color: white;
-    border: none;
-    padding: 8px;
-    cursor: pointer;
-}
+    .toolbar {
+      display: flex;
+      gap: 0.5rem;
+      padding: 0.75rem 1rem;
+      justify-content: center;
+      flex-wrap: wrap;
+      background: #e6ecff;
+      border-bottom: 1px solid #ccd4ff;
+    }
 
-/* INGREDIENTS */
-.ingredients span {
-    display: block;
-    padding: 5px;
-    margin: 5px 0;
-    background: #f5f5f5;
-    cursor: pointer;
-}
+    #searchInput, #filterSelect {
+      padding: 0.4rem 0.6rem;
+      border-radius: 999px;
+      border: 1px solid #ccd4ff;
+      min-width: 220px;
+      font-size: 0.9rem;
+    }
 
-.ingredients span:hover {
-    background: #C8102E;
-    color: white;
-}
-</style>
+    main {
+      max-width: 1100px;
+      margin: 1rem auto 2rem;
+      padding: 0 1rem;
+    }
+
+    .tab-content {
+      display: none;
+    }
+
+    .tab-content.active {
+      display: block;
+    }
+
+    .tab-content h2 {
+      margin-bottom: 0.75rem;
+    }
+
+    .cards {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
+      gap: 0.75rem;
+    }
+
+    .card {
+      background: #fff;
+      border-radius: 0.75rem;
+      padding: 0.75rem 0.9rem;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.06);
+      border: 1px solid #e0e4ff;
+    }
+
+    .card-title {
+      font-weight: 700;
+      margin-bottom: 0.25rem;
+    }
+
+    .card-meta {
+      font-size: 0.8rem;
+      color: #666;
+      margin-bottom: 0.4rem;
+    }
+
+    .card-text {
+      font-size: 0.9rem;
+    }
+
+    .card-tag {
+      display: inline-block;
+      margin-top: 0.4rem;
+      padding: 0.15rem 0.45rem;
+      border-radius: 999px;
+      background: #ffcc00;
+      font-size: 0.75rem;
+      font-weight: 600;
+      color: #222;
+    }
+
+    footer {
+      text-align: center;
+      padding: 1rem;
+      font-size: 0.8rem;
+      color: #555;
+    }
+  </style>
 </head>
-
 <body>
+  <header>
+    <h1>Bart Simpson – Fils d'Homer</h1>
+    <p>Référence numérique du tome 3 : personnages, lieux, objets et répliques.</p>
+  </header>
 
-<header>
-<h2>Carrefour Extra</h2>
-<nav>
-<button onclick="showPage('home')">Accueil</button>
-<button onclick="showPage('catalogue')">Catalogue</button>
-<button onclick="showPage('recette')">Recette</button>
-<button onclick="showPage('compte')">Compte</button>
-</nav>
-</header>
+  <nav class="tabs">
+    <button class="tab-button active" data-tab="personnages">Personnages</button>
+    <button class="tab-button" data-tab="lieux">Lieux</button>
+    <button class="tab-button" data-tab="objets">Objets</button>
+    <button class="tab-button" data-tab="repliques">Répliques drôles</button>
+  </nav>
 
-<!-- ACCUEIL -->
-<div id="home" class="page active">
-<div class="hero">
-<h1>L'exigence du goût</h1>
-</div>
+  <section class="toolbar">
+    <input type="text" id="searchInput" placeholder="Rechercher... (nom, description, réplique)">
+    <select id="filterSelect">
+      <option value="all">Tous les éléments</option>
+      <option value="personnages">Personnages</option>
+      <option value="lieux">Lieux</option>
+      <option value="objets">Objets</option>
+      <option value="repliques">Répliques</option>
+    </select>
+  </section>
 
-<h2>Produits populaires</h2>
+  <main>
+    <section id="personnages" class="tab-content active">
+      <h2>Personnages du tome</h2>
+      <div class="cards" id="personnagesList"></div>
+    </section>
 
-<div class="products">
-<div class="card">
-<h3>Fromage AOP</h3>
-<p>5€</p>
-<button onclick="addToCart('Fromage')">Ajouter</button>
-</div>
+    <section id="lieux" class="tab-content">
+      <h2>Lieux du tome</h2>
+      <div class="cards" id="lieuxList"></div>
+    </section>
 
-<div class="card">
-<h3>Houmous</h3>
-<p>3€</p>
-<button onclick="addToCart('Houmous')">Ajouter</button>
-</div>
-</div>
-</div>
+    <section id="objets" class="tab-content">
+      <h2>Objets du tome</h2>
+      <div class="cards" id="objetsList"></div>
+    </section>
 
-<!-- CATALOGUE -->
-<div id="catalogue" class="page">
-<h2>Catalogue</h2>
+    <section id="repliques" class="tab-content">
+      <h2>Répliques drôles du tome</h2>
+      <div class="cards" id="repliquesList"></div>
+    </section>
+  </main>
 
-<div class="products">
-<div class="card">
-<h3>Quinoa</h3>
-<button onclick="addToCart('Quinoa')">Ajouter</button>
-</div>
+  <footer>
+    <p>Projet fan • Tome 3 : Bart Simpson – Fils d'Homer</p>
+  </footer>
 
-<div class="card">
-<h3>Avocat</h3>
-<button onclick="addToCart('Avocat')">Ajouter</button>
-</div>
-</div>
-</div>
+  <script>
+    // --- Données d'exemple à remplacer par le contenu réel du tome 3 ---
 
-<!-- RECETTE -->
-<div id="recette" class="page">
-<h2>Buddha Bowl</h2>
+    const data = {
+      personnages: [
+        {
+          nom: "Bart Simpson",
+          role: "Protagoniste",
+          description: "Le fils turbulent d'Homer, au centre des gags de ce tome.",
+          tags: ["Simpson", "École", "Farces"]
+        },
+        {
+          nom: "Homer Simpson",
+          role: "Père de Bart",
+          description: "Père maladroit, souvent à l'origine de situations absurdes.",
+          tags: ["Famille", "Duff"]
+        }
+      ],
+      lieux: [
+        {
+          nom: "École élémentaire de Springfield",
+          type: "École",
+          description: "Lieu de nombreuses bêtises de Bart dans ce tome.",
+          tags: ["École", "Springfield"]
+        },
+        {
+          nom: "Maison des Simpson",
+          type: "Maison",
+          description: "Le foyer familial où se déroulent plusieurs scènes clés.",
+          tags: ["Famille", "Springfield"]
+        }
+      ],
+      objets: [
+        {
+          nom: "Skateboard de Bart",
+          type: "Objet personnel",
+          description: "Utilisé dans plusieurs gags visuels du tome.",
+          tags: ["Skate", "Bart"]
+        },
+        {
+          nom: "Télécommande TV",
+          type: "Objet du salon",
+          description: "Source de disputes et de gags avec Homer.",
+          tags: ["Télé", "Salon"]
+        }
+      ],
+      repliques: [
+        {
+          personnage: "Bart",
+          texte: "Je ne l’ai pas fait, personne ne peut le prouver !",
+          contexte: "Après une bêtise à l’école.",
+          tags: ["École", "Déni"]
+        },
+        {
+          personnage: "Homer",
+          texte: "Mmmh… donuts.",
+          contexte: "Devant une boîte de donuts alors que tout part en vrille.",
+          tags: ["Donuts", "Homer"]
+        }
+      ]
+    };
 
-<h3>Ingrédients</h3>
-<div class="ingredients">
-<span onclick="addToCart('Quinoa')">Quinoa Carrefour Extra</span>
-<span onclick="addToCart('Houmous')">Houmous Carrefour Extra</span>
-<span onclick="addToCart('Avocat')">Avocat</span>
-</div>
+    // --- Gestion des onglets ---
 
-<button onclick="addAll()">Ajouter tous au panier</button>
+    const tabButtons = document.querySelectorAll(".tab-button");
+    const tabContents = document.querySelectorAll(".tab-content");
 
-<h3>Préparation</h3>
-<ol>
-<li>Cuire le quinoa</li>
-<li>Couper les légumes</li>
-<li>Mélanger</li>
-</ol>
+    tabButtons.forEach(button => {
+      button.addEventListener("click", () => {
+        const target = button.dataset.tab;
 
-<h3>Produits recommandés</h3>
-<div class="products">
-<div class="card">
-<p>Fromage AOP</p>
-<button onclick="addToCart('Fromage')">Ajouter</button>
-</div>
-</div>
-</div>
+        tabButtons.forEach(b => b.classList.remove("active"));
+        tabContents.forEach(c => c.classList.remove("active"));
 
-<!-- COMPTE -->
-<div id="compte" class="page">
-<h2>Mon panier</h2>
-<ul id="cart"></ul>
-</div>
+        button.classList.add("active");
+        document.getElementById(target).classList.add("active");
+      });
+    });
 
-<script>
-let panier = [];
+    // --- Rendu des cartes ---
 
-function showPage(pageId) {
-    document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
-    document.getElementById(pageId).classList.add('active');
-}
+    function createTagSpan(tag) {
+      const span = document.createElement("span");
+      span.className = "card-tag";
+      span.textContent = tag;
+      return span;
+    }
 
-function addToCart(produit) {
-    panier.push(produit);
-    alert(produit + " ajouté au panier");
-    updateCart();
-}
+    function renderPersonnages(list) {
+      const container = document.getElementById("personnagesList");
+      container.innerHTML = "";
+      list.forEach(p => {
+        const card = document.createElement("article");
+        card.className = "card";
+        card.innerHTML = `
+          <div class="card-title">${p.nom}</div>
+          <div class="card-meta">${p.role}</div>
+          <div class="card-text">${p.description}</div>
+        `;
+        if (p.tags && p.tags.length) {
+          p.tags.forEach(t => card.appendChild(createTagSpan(t)));
+        }
+        container.appendChild(card);
+      });
+    }
 
-function addAll() {
-    let produits = ["Quinoa", "Houmous", "Avocat"];
-    panier.push(...produits);
-    alert("Tous les ingrédients ajoutés !");
-    updateCart();
-}
+    function renderLieux(list) {
+      const container = document.getElementById("lieuxList");
+      container.innerHTML = "";
+      list.forEach(l => {
+        const card = document.createElement("article");
+        card.className = "card";
+        card.innerHTML = `
+          <div class="card-title">${l.nom}</div>
+          <div class="card-meta">${l.type}</div>
+          <div class="card-text">${l.description}</div>
+        `;
+        if (l.tags && l.tags.length) {
+          l.tags.forEach(t => card.appendChild(createTagSpan(t)));
+        }
+        container.appendChild(card);
+      });
+    }
 
-function updateCart() {
-    let cart = document.getElementById("cart");
-    cart.innerHTML = "";
-    panier.forEach(p => {
-        let li = document.createElement("li");
-        li.textContent = p;
-        cart.appendChild(li);
-    });
-}
-</script>
+    function renderObjets(list) {
+      const container = document.getElementById("objetsList");
+      container.innerHTML = "";
+      list.forEach(o => {
+        const card = document.createElement("article");
+        card.className = "card";
+        card.innerHTML = `
+          <div class="card-title">${o.nom}</div>
+          <div class="card-meta">${o.type}</div>
+          <div class="card-text">${o.description}</div>
+        `;
+        if (o.tags && o.tags.length) {
+          o.tags.forEach(t => card.appendChild(createTagSpan(t)));
+        }
+        container.appendChild(card);
+      });
+    }
 
+    function renderRepliques(list) {
+      const container = document.getElementById("repliquesList");
+      container.innerHTML = "";
+      list.forEach(r => {
+        const card = document.createElement("article");
+        card.className = "card";
+        card.innerHTML = `
+          <div class="card-title">« ${r.texte} »</div>
+          <div class="card-meta">${r.personnage}</div>
+          <div class="card-text">${r.contexte}</div>
+        `;
+        if (r.tags && r.tags.length) {
+          r.tags.forEach(t => card.appendChild(createTagSpan(t)));
+        }
+        container.appendChild(card);
+      });
+    }
+
+    // --- Recherche + filtre global ---
+
+    const searchInput = document.getElementById("searchInput");
+    const filterSelect = document.getElementById("filterSelect");
+
+    function normalize(str) {
+      return (str || "").toLowerCase();
+    }
+
+    function applyFilters() {
+      const query = normalize(searchInput.value);
+      const filter = filterSelect.value;
+
+      // Personnages
+      const personnagesFiltres = data.personnages.filter(p => {
+        const haystack = normalize(
+          p.nom + " " + p.role + " " + p.description + " " + (p.tags || []).join(" ")
+        );
+        return haystack.includes(query);
+      });
+
+      // Lieux
+      const lieuxFiltres = data.lieux.filter(l => {
+        const haystack = normalize(
+          l.nom + " " + l.type + " " + l.description + " " + (l.tags || []).join(" ")
+        );
+        return haystack.includes(query);
+      });
+
+      // Objets
+      const objetsFiltres = data.objets.filter(o => {
+        const haystack = normalize(
+          o.nom + " " + o.type + " " + o.description + " " + (o.tags || []).join(" ")
+        );
+        return haystack.includes(query);
+      });
+
+      // Répliques
+      const repliquesFiltres = data.repliques.filter(r => {
+        const haystack = normalize(
+          r.personnage + " " + r.texte + " " + r.contexte + " " + (r.tags || []).join(" ")
+        );
+        return haystack.includes(query);
+      });
+
+      if (filter === "all" || filter === "personnages") {
+        renderPersonnages(personnagesFiltres);
+      } else {
+        renderPersonnages(filter === "personnages" ? personnagesFiltres : data.personnages);
+      }
+
+      if (filter === "all" || filter === "lieux") {
+        renderLieux(lieuxFiltres);
+      } else {
+        renderLieux(filter === "lieux" ? lieuxFiltres : data.lieux);
+      }
+
+      if (filter === "all" || filter === "objets") {
+        renderObjets(objetsFiltres);
+      } else {
+        renderObjets(filter === "objets" ? objetsFiltres : data.objets);
+      }
+
+      if (filter === "all" || filter === "repliques") {
+        renderRepliques(repliquesFiltres);
+      } else {
+        renderRepliques(filter === "repliques" ? repliquesFiltres : data.repliques);
+      }
+    }
+
+    searchInput.addEventListener("input", applyFilters);
+    filterSelect.addEventListener("change", applyFilters);
+
+    // --- Initialisation ---
+
+    renderPersonnages(data.personnages);
+    renderLieux(data.lieux);
+    renderObjets(data.objets);
+    renderRepliques(data.repliques);
+  </script>
 </body>
 </html>
